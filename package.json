@@ -1,0 +1,141 @@
+{
+	"name": "vscode-bugs",
+	"displayName": "Editor Title Menu Bug",
+	"description": "Editor Title Menu will not be updated",
+	"version": "0.0.1",
+	"publisher": "L13RARY",
+	"license": "SEE LICENCE IN LICENCE.md",
+	"homepage": "https://github.com/l13/vscode-bugs/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/l13/vscode-bugs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/l13/vscode-bugs/issues"
+	},
+	"icon": "images/icon.png",
+	"galleryBanner": {
+		"color": "#232323",
+		"theme": "dark"
+	},
+	"engines": {
+		"vscode": "^1.51.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"compare",
+		"diff",
+		"folder",
+		"file",
+		"workspace"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "l13Bug.action.ignoreWhitespace",
+				"title": "Ignore Leading/Trailing Whitespace",
+				"icon": {
+					"light": "images/toggle-whitespace-light.svg",
+					"dark": "images/toggle-whitespace-dark.svg"
+				}
+			},
+			{
+				"command": "l13Bug.action.compareWhitespace",
+				"title": "Compare Leading/Trailing Whitespace",
+				"icon": {
+					"light": "images/toggle-whitespace-disabled-light.svg",
+					"dark": "images/toggle-whitespace-disabled-dark.svg"
+				}
+			},
+			{
+				"command": "l13Bug.action.ignoreEndOfLine",
+				"title": "Ignore End of Line",
+				"icon": {
+					"light": "images/toggle-eol-light.svg",
+					"dark": "images/toggle-eol-dark.svg"
+				}
+			},
+			{
+				"command": "l13Bug.action.compareEndOfLine",
+				"title": "Compare End of Line",
+				"icon": {
+					"light": "images/toggle-eol-disabled-light.svg",
+					"dark": "images/toggle-eol-disabled-dark.svg"
+				}
+			}
+		],
+		"menus": {
+			"editor/title": [
+				{
+					"command": "l13Bug.action.ignoreEndOfLine",
+					"when": "!config.l13Bug.ignoreEndOfLine",
+					"group": "navigation@1"
+				},
+				{
+					"command": "l13Bug.action.compareEndOfLine",
+					"when": "config.l13Bug.ignoreEndOfLine",
+					"group": "navigation@1"
+				},
+				{
+					"command": "l13Bug.action.ignoreWhitespace",
+					"when": "config.l13Bug.ignoreTrimWhitespace == 'default' && !config.diffEditor.ignoreTrimWhitespace",
+					"group": "navigation@2"
+				},
+				{
+					"command": "l13Bug.action.compareWhitespace",
+					"when": "config.l13Bug.ignoreTrimWhitespace == 'default' && config.diffEditor.ignoreTrimWhitespace",
+					"group": "navigation@2"
+				}
+			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "Editor Title Menu Bug",
+			"properties": {
+				"l13Bug.ignoreEndOfLine": {
+					"type": "boolean",
+					"default": false,
+					"description": ""
+				},
+				"l13Bug.ignoreTrimWhitespace": {
+					"type": "string",
+					"default": "default",
+					"enum": [
+						"default"
+					],
+					"description": "",
+					"enumDescriptions": [
+						""
+					]
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.51.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.0",
+		"@types/node": "^12.11.7",
+		"eslint": "^7.9.0",
+		"@typescript-eslint/eslint-plugin": "^4.1.1",
+		"@typescript-eslint/parser": "^4.1.1",
+		"glob": "^7.1.6",
+		"mocha": "^8.1.3",
+		"typescript": "^4.0.2",
+		"vscode-test": "^1.4.0"
+	}
+}
